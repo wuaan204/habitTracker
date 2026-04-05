@@ -3,20 +3,27 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-    preprocess: vitePreprocess(),
-    kit: {
-        adapter: adapter({
-            pages: 'build',
-            assets: 'build',
-            fallback: '404.html', 
-            precompress: false,
-            strict: true
-        }),
-        paths: {
-            // Đổi 'ten-repo-cua-ban' thành tên repo GitHub của bạn
-            base: process.argv.includes('dev') ? '' : '/habitTracker',
-        }
-    }
+  preprocess: vitePreprocess(),
+  kit: {
+      adapter: adapter({
+          pages: 'build',
+          assets: 'build',
+          fallback: '404.html',
+          precompress: false,
+          strict: true
+      }),
+      paths: {
+          base: process.argv.includes('dev') ? '' : '/habitTracker',
+      },
+      prerender: {
+          handleHttpError: ({ path, referrer, message }) => {
+              if (path === '/favicon.png' || path === '/habitTracker/favicon.png') {
+                  return;
+              }
+              throw new Error(message);
+          }
+      }
+  }
 };
 
 export default config;
