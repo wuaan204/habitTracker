@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         env:
-          BASE_PATH: 'habit-tracker'
+          BASE_PATH: 'habitTracker'
         run: npm run build
 
       - name: Upload Artifacts
