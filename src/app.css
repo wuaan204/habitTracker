@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #fafafa;
+  color: #2d3748;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+::selection {
+  background: #f3f4f6;
+  color: #111111;
+}
+
+/* ── SVG Year Grid ─────────────────────────────────────────────────────────────
+   Interactivity lives entirely in CSS — zero JS animation overhead.
+   :hover / :active / @keyframes all execute on the GPU compositor thread,
+   not the JS main thread, guaranteeing 60 fps even with many habits.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/*
+  Each day is a bare <circle class="day-circle"> with a direct Svelte on:click.
+  No wrapper <g> element needed — CSS targets the circle itself.
+*/
+.day-circle {
+  cursor: pointer;
+  touch-action: manipulation;       /* removes 300ms tap delay on mobile */
+  transition: fill 120ms ease, stroke 120ms ease;
+  transform-box: fill-box;          /* scale relative to the circle's own bbox */
+  transform-origin: center;
+}
+
+.day-circle:hover {
+  transform: scale(1.3);
+  transition: transform 100ms ease, fill 120ms ease, stroke 120ms ease;
+}
+
+.day-circle:active {
+  transform: scale(0.78);
+  transition: transform 60ms ease;
+}
+
+/* Checkmark draw-in animation — stroke-dashoffset trick */
+@keyframes habitCheck {
+  from {
+    stroke-dashoffset: 20;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.habit-check {
+  stroke-dasharray: 20;
+  animation: habitCheck 0.26s ease-out forwards;
+}
