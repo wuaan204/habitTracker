@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         env:
-          BASE_PATH: 'habit-tracker' # Đổi tên repo của bạn ở đây
+          BASE_PATH: 'habit-tracker'
         run: npm run build
 
       - name: Upload Artifacts
