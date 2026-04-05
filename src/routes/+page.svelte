@@ -240,19 +240,34 @@
 
       <!-- ── 365-Day Grid ────────────────────────────────────────────────────── -->
       <!--
-        YearGrid renders as a single <svg> — one delegated onClick, zero
-        per-cell JS listeners, CSS handles all animations.
+        CSS Containment: `contain: layout style paint` tells the browser's
+        layout engine that nothing inside this box can affect geometry outside
+        it, and nothing outside can affect rendering inside — so adding a new
+        habit tab above does NOT trigger a layout recalc for the 365 circles.
+
+        `content-visibility: auto` lets the browser skip layout + paint
+        entirely when this region is off-screen (helpful on shorter viewports).
+        `contain-intrinsic-size` provides the estimated height so the scrollbar
+        doesn't jump while the grid is skipped.
       -->
-      {#key year}
-        <div in:fade={{ duration: 200 }}>
-          <YearGrid
-            {year}
-            {completedDates}
-            {selectedDate}
-            onDayClick={handleDayClick}
-          />
-        </div>
-      {/key}
+      <div
+        style="
+          contain: layout style paint;
+          content-visibility: auto;
+          contain-intrinsic-size: 0 148px;
+        "
+      >
+        {#key year}
+          <div in:fade={{ duration: 200 }}>
+            <YearGrid
+              {year}
+              {completedDates}
+              {selectedDate}
+              onDayClick={handleDayClick}
+            />
+          </div>
+        {/key}
+      </div>
 
       <!-- ── Date Inspector ─────────────────────────────────────────────────── -->
       <div class="min-h-[52px] mt-4">

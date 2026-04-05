@@ -53,7 +53,19 @@
   adds negligible overhead while keeping the code idiomatic.
   CSS @keyframes and :hover/:active on .day-circle run on the GPU compositor.
 -->
-<div class="overflow-x-auto select-none pb-3" style="will-change: transform;">
+<div
+  class="overflow-x-auto select-none pb-3"
+  style="
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  "
+>
+  <!--
+    translateZ(0) promotes this element to its own GPU composite layer.
+    The browser hands the entire SVG to the GPU for rasterisation — the
+    CPU only needs to update circle attributes when state changes; actual
+    pixel drawing is off-thread.
+  -->
   <svg
     width={svgW}
     height={svgH}

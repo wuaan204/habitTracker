@@ -1,4 +1,4 @@
-let base = "";
+let base = "/habitTracker";
 let assets = base;
 const app_dir = "_app";
 const relative = true;
