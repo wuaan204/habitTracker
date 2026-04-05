@@ -14,7 +14,7 @@ const config = {
         }),
         paths: {
             // Đổi 'ten-repo-cua-ban' thành tên repo GitHub của bạn
-            base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+            base: process.argv.includes('dev') ? '' : '/habitTracker',
         }
     }
 };
